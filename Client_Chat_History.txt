@@ -1,0 +1,408 @@
+================================================================================
+CLIENT CHAT HISTORY — Jared (Kimball Law / Zahavian Legal Marketing)
+================================================================================
+Purpose: Full conversation with client. Use for context, demo scope, access, and
+         what to build. Newest messages at the bottom.
+================================================================================
+
+Hi Amir, thanks for applying to our job. We received a lot of interest in this job including a good number of strong candidates. We really liked your profile and you passed all of our expectations with your proposal. We have some questions to learn more about you and make sure we're a good fit for this project. Here's the first set of questions.
+9:46 PM
+
+You’re comfortable developing end-to-end automations that tie GHL, Make and agentic AI platforms together?
+
+Do you have any experience with agile development or agile projects? If so, what are your thoughts on them and how do you approach them?
+
+Are you comfortable having video calls during different milestones of the project? Are you confident in your spoken English to share your ideas and feedback?
+9:47 PM
+
+Hi jaredkf,
+Thank you for considering my proposal! I'm excited about this opportunity and happy to answer your questions
+10:38 PM
+
+Yes, absolutely. I'm very comfortable building complete automation systems that connect HighLevel, Make.com, and AI platforms. I understand how to structure workflows to prevent loops, handle data syncing, and integrate conversational AI agents.
+10:40 PM
+
+Yes, I have experience with agile projects. I appreciate the iterative approach building in sprints, shipping weekly, getting feedback, and adjusting quickly. It keeps projects moving forward and ensures we're always aligned on priorities. I'm comfortable breaking down user stories into actionable tasks and delivering incrementally.
+10:41 PM
+
+Absolutely comfortable with video calls at project milestones. My spoken English is confident, and I can clearly explain technical concepts, share progress updates, and discuss solutions.
+10:43 PM
+
+User Avatar
+Thanks, Amir.
+10:47 PM
+
+- How would you rank yourself for the following skills: a) intermediate to advanced Make automations b) LLM prompt engineering and development c) GHL workflows d) working with Microsoft APIs e) general automation testing f) general debugging
+
+- What hours and time zone do you prefer to work on?
+
+- You’re happy to commit to approximately 20-40 hours per week of work for about 8 weeks after if the barebones demo is successful?
+10:48 PM
+
+Skill Rankings (1-10):
+
+Make automations: 8/10
+LLM prompt engineering: 7.5/10
+GHL workflows: 7/10
+Microsoft APIs: 7/10
+Automation testing: 8/10
+Debugging: 8.5/10
+10:52 PM
+
+Working Hours
+Pakistan Standard Time (UTC+5). Flexible to overlap with AST mornings/afternoons for live testing and calls.
+10:52 PM
+
+Yes, fully committed to 20-40 hours/week for 8 weeks after successful demo. Can start immediately
+10:53 PM
+
+one thing more i have done same project on upwork as well below i will also share the project details
+10:54 PM
+
+I've actually worked on similar integrations for law firms before, specifically with Clio and payment systems.
+In a recent project, I successfully completed:
+
+Clio Grow calendar integration on the firm's website with booking widgets for multiple attorneys
+LawPay payment gateway integration with the Clio booking system, enabling prepayment for consultations
+Automated intake workflows with conditional logic—clients book → pay → receive automated intake forms → complete questionnaires → upload documents
+OAuth and API troubleshooting for calendar sync issues
+
+This project involved the exact type of system integration, automation workflows, and legal tech platforms relevant to your needs. I'd be happy to share more details or discuss how this experience translates to your specific requirements.
+10:56 PM
+
+PHOTO-2026-01-29-22-58-19.jpg
+PHOTO-2026-01-29-22-58-19.jpg
+10:59 PM
+
+User Avatar
+That's great to know that you already have experience with Clio. That's a big bonus. A few more things.
+
+- Have you ever worked on a project where it never went into production? If so, why not?
+
+- What’s the most complex AI agent or LLM integration you’ve ever made?
+
+- Since we're dealing with legal data, I'll take some precautions to limit the firm's data. However, there still might be instances where you might inadvertently have access to sensitive data. To safeguard the firm's interests, would you be willing to sign an NDA and/or IP agreement to protect the firm's interests?
+11:14 PM
+
+Yes, I worked on a comprehensive automation platform for a client that didn't go to production. We were nearly ready to launch when a major competitor introduced similar features with more options at a competitive price. My client decided it wasn't viable to compete and pivoted strategy, making our project a subset of their larger offering instead of a standalone product. It was a business decision, not a technical failure.
+11:24 PM
+
+My most complex AI integration was a voice AI agent for meeting scheduling built with Bland AI and Lagira.
+The system handled:
+
+Inbound calls: AI answered calls, understood scheduling requests, and booked meetings automatically
+Outbound calls: AI proactively called leads to schedule appointments
+Smart routing: Three different call flow rules based on call type and context
+Integration with calendar and CRM systems
+Natural conversation handling with edge case management
+
+Project details: https://drive.google.com/drive/folders/1r1ZhN8QUepJgfU7VjPjQ2BDz5wlh-aUQ
+This project gave me hands-on experience with conversational AI design, telephony integration, and production-ready voice agent development.
+11:38 PM
+
+Absolutely. I fully respect the sensitive nature of legal data and understand the importance of confidentiality. I'm completely comfortable signing an NDA and IP agreement to protect the firm's interests. I take data privacy seriously and will handle all information with strict discretion. No sensitive data will be shared with anyone under any circumstances.
+11:39 PM
+
+Today
+
+User Avatar
+Thanks for sharing that. The project looks impressive. Last big round of questions:
+
+- Let's say you run into a tricky Make.com automation problem (e.g. related to iterations, error handing, aggregators, mapping, etc.). Do you prefer using Google, ChatGPT/Gemini, or something else to research and find a solution to your problem? Please explain your preferences and what you find most useful for speed and quality.
+
+- How did you find Bland AI? Good quality, easy to develop, test, reliable, etc? I used it a year ago and while it was overall impressive, especially some of the voices, the agent's responses and listening wasn't the best.
+
+- On page 4 of the LangChain PDF, what is the software you're using there and how did it integrate with that project?
+
+- Was the project requirements diagram I saw on page 5 in that PDF made by you or the client?
+
+- Based on the tech stack I've described in the job description, are there any specific tools (such as LangChain) you'd like us to use to get this job done?
+
+- With the limited information you have so far on this project, is there something that concerns you most?
+
+- Do you have any questions?
+12:24 AM
+
+I use a combination approach. For Make.com specific issues, I start with Make.com's official documentation and community forum they're the most accurate for platform-specific features. For complex logic problems (iterations, aggregators, JSON parsing), I use ChatGPT/Claude to brainstorm solutions quickly, then validate against documentation. For error handling patterns, I prefer Google to find real-world examples from other developers who've solved similar issues. Speed comes from AI, quality comes from verifying with docs and testing thoroughly.
+12:37 AM
+
+I found Bland AI impressive overall voices are natural and setup is straightforward. However, I agree with your assessment: response timing and listening accuracy weren't perfect, especially with interruptions or complex requests. For production use, I had to add extra prompt engineering and fallback handlers to improve reliability. It's good for straightforward scenarios but needs careful tuning for complex conversations.
+12:50 AM
+
+The software shown is LangChain + LangGraph for conversation flow and decision logic, integrated with Node.js backend, MongoDB for data storage, and ChromaDB for vector memory/context retention. It managed the AI agent's conversation state, routing logic (schedule/reschedule/delete), and maintained context across calls. The integration allowed the voice agent to make intelligent decisions based on user intent and retrieve relevant meeting information dynamically.
+12:58 AM
+
+The requirements diagram was shared by the client. I used it to understand their business needs and then designed the technical architecture and implementation approach accordingly.
+1:00 AM
+
+Based on your tech stack, I'd recommend keeping it streamlined: Make.com for orchestration, native API calls where possible, and avoid adding LangChain unless absolutely necessary. LangChain adds complexity and dependencies that can slow development. For your use case (CRM workflows, telephony, AI agents), direct API integrations will be faster, more reliable, and easier to debug. Unless you need advanced LLM chaining or vector databases, simpler is better.
+1:07 AM
+
+My main concern is bi-directional sync and preventing infinite loops between GHL, Clio, and RingCentral while maintaining data integrity. With multiple webhook triggers, one mistake can create cascading updates. I'll need to implement careful timestamp tracking, unique identifiers, and conditional checks. This is solvable, but requires meticulous planning upfront.
+1:16 AM
+
+User Avatar
+Look, this all seems great. We're looking forward to having you work on the demo. I'll send you project outline for the demo now, it's pretty basic so please review it, ask any questions you need and let's get started.
+
+I've also attached a screenshot so you can see what it looks like with its formatting.
+
+For a little more context, since we don't know if we'll be moving forward after the demo, I want to give you some expectations:
+
+- Build demo
+- Wait about 1 week so I can present demo and get feedback on whether we're moving ahead with the larger project or not.
+- If yes, I'll just create a new project for you and hire you for that.
+
+After you have a chance to review the project outline, let me know:
+
+- Any questions you have.
+- Anything you need to get started.
+
+I'm behind on other work this week which I really need to address, so I plan on having you onboarded to GHL, Make, etc in the next day or 2. But like I said above, if you can provide me a list of all access and setup you need me to do in advance (just so I don't miss anything), that would be great.
+
+Thanks, Amir!
+3:40 AM
+
+1.2 The "End-to-End" Demo Workflow (Construction)
+Step A (Ingest): Create a dummy "Contact Us" form in GHL.
+Step B (The Call): Configure a GHL Workflow:
+- Trigger: Form Submitted ->
+- Actions [A-Z]:
+- - Trigger Webhook to Make/Retell AI
+- - AI Calls Lead
+- - AI Books Appointment on GHL Calendar (synced to Clio).
+
+Notes: Get the Voice AI to ask sufficient questions that not only can it:
+1) take general notes about the lead,
+2) book the appointment,
+3) move it in the pipeline,
+but ALSO
+4) have it evaluate the call
+5) ask certain questions and then output MVA specific data that can be automatically populated in GHL custom fields and then mapped to the custom fields / set in the Clio Manage matter once it's created as pending in Step C below.
+
+Step C (The Hand-off): Build Make.com Scenario #1:
+- Trigger: GHL Opportunity Status moved to "Consult Scheduled."
+- Action 1: Create "Person" and "Pending Matter" in Clio Manage.
+- Action 2: Create List Item in Sharepoint "Intake Tracker."
+Step D (The Docs): Build Make.com Scenario #2:
+- Trigger: Sharepoint List Item Created.
+- Action 1: Create Client Folder in OneDrive/Sharepoint.
+- Action 2: Populate Word Doc Templates (Retainer, Initial Memo) with lead data and save to new folder.
+3:42 AM
+
+Screenshot 2026-01-29 at 4.42.17 PM.png
+Screenshot 2026-01-29 at 4.42.17 PM.png
+3:42 AM
+
+Thank you for the opportunity and for sharing the demo outline! I've reviewed it carefully and I'm confident this is absolutely achievable within the timeline.
+3:11 PM
+
+
+Excellent. So, I'm still busy with other projects but it's on my list to get you credentials and set up access. Let me know if there's anything specific you think we need.
+
+
+I'm ready to begin immediately.
+To start building Step A & B (form creation and workflow setup), I'll need the following:
+HighLevel Access Requirements:
+
+Admin account login credentials
+Full permissions to create and configure forms, workflows, custom fields, and calendars
+
+Once I have access, I can begin building right away and will keep you updated on progress.
+
+
+Congratulations, your bid has been awarded!
+Click the Accept button below to start working.
+
+This is an hourly project with a rate of $12.00 CAD per hour. Accepting is free.
+
+Accept
+Milestone created by @jaredkf
+Initial deposit
+ — $48.00 CAD
+Prototyper Board
+Sketch ideas, share notes, and collaborate in real time. You've been invited to a Prototyper board by @amirshahzad422.
+
+Join Prototyper
+Accepted!
+You're all set to start working!
+
+I'm outlining the implementation plan to start working and will share the update soon
+Today
+
+Jared, hope you are doing great. Need a little of your time to move forward
+
+I’ve attached a short requirements document. It’s in plain language and lists everything I need from you to start the demo (GHL, Make.com, Retell, Clio, SharePoint, Microsoft 365), with a brief reason for each, so nothing is unclear.
+
+I’ve done a full pass on the workflow and implementation plan, so the list is based on that. Once I have these in place (or a timeline for any that are pending), I’ll begin with the form and AI call flow and then connect Clio and the docs. Please take a look when you can and let me know if you’d like to adjust anything.
+Requirements to Start - Law Firm CRM Automation (Demo).pdf
+User Avatar
+Hi Amir, I was offline due to a power outage for the past 30 hours. I'll review the document and start getting you set up shortly. Thank you for your patience.
+By the way, I've printed and am reviewing your requirements to start doc. While I haven't reviewed it entirely, it looks great at first glance. I'm wondering if you used Gemini, ChatGPT, Claude etc to draft it?
+I wouldn't think of that negatively, I use them all the time. Just wondering if you have preferred AIs/LLMs you like to use.
+Jared, to be very honest,
+I have created a folder and inside that I have all the files related to the project to create a context and I opened that folder in VS code which uses Claude
+I created separate files for the implementation plan and then a dedicated file for the requirements that I shared with you, but in the IDE it creates .MD files
+So I copied the content and opened Claude from web and prompted to give me the same content in well formatted way, and then pasted the result in Google Docs and did the final formatting by myself and then I sent it to you
+Screenshot 2026-02-01 at 10.15.55 AM.png
+Screenshot 2026-02-01 at 10.15.55 AM.png
+I always prefer Claude over all other LLM's for content generation, proposal writing, and for the captions, etc. It is best for technical work.
+Secondly, I always cross validate the AI output by multiples LLMS, for example, if I have to research on a topic, then I also use the Gemini Pro research, perplexity, and Grok sometimes
+User Avatar
+That's great. To be clear, I'm very much in favor of using LLMs as I find it speeds up productivity. I look forward to working with you.
+I use VS Code too.
+I'll get back to you when I have some assets to share. I'm documenting your requirements doc now.
+Everything you've shared, including the .md screenshot looks great.
+Can you email me at jared[at]zhvn.org
+I'll use that to send you Make and GHL login details.
+Just sent you an Email, check it out
+Take your time to document the requirements, and try to share as soon as you can.
+as the implementation depends on them.
+User Avatar
+Perfect. I've invited you to GHL and Make.
+I'll add a funnel you can use, but you'll probably need to create the form.
+I'll keep you posted as I set things up.
+Screenshot 2026-02-01 at 12.08.02 AM.png
+Screenshot 2026-02-01 at 12.08.02 AM.png
+Thanks for the invitation, Jared. Yes, I need to create the form, and I can take start now
+User Avatar
+The Make.com plan has 40,000 credits.
+You can use 10,000 safely over the next 30 days. If you need more, let me know.
+@jaredkf
+
+@amirshahzad422
+
+Thanks for the invitation, Jared. Yes, I need to create the form, and I can take start now
+👍
+Thanks for the clarity about the credits, and yes, I will keep you updated on run time.
+No worries at all.
+User Avatar
+https://app.gohighlevel.com/v2/location/C4Zs4L5cOXo5ktQzLHtw/dashboard
+In case you didn't have access to the sub-account.
+Alright
+Quick update, Jared: I now have the access I need to start the Week 1 demo (GHL and Make.com are set up), so I’ve begun working on it. I’ll start with the form and workflow (Steps A & 😎 and keep you posted as each part is in place. If anything comes up that I need from your side, I’ll reach out. Thanks again for getting everything sorted.
+One quick thing I’d like to align on so we’re on the same page: we’re working at $12/hr, and the initial deposit is $48, which I’m treating as the first 4 hours to get the project started. Could you confirm whether that $48 is meant to cover only those first 4 hours (and then we continue hourly from there), or if it’s intended to cover the whole Week 1 demo? Either way works for me - I just want to make sure we’re aligned. Thanks.
+User Avatar
+Sounds great.
+I’d also love to hear how you’d like to handle moving forward in terms of hours and updates. For example: do you prefer a rough cap per week (e.g. up to 40 hours for Week 1), or is it flexible based on what the demo needs? And would you like short weekly updates, or check-ins at certain milestones? I’m happy to follow whatever process works best for you - just want to match your expectations so we can plan smoothly.
+Overall I’m set on the demo scope we discussed (Steps A–D) and will build toward that. If anything shifts or you want to adjust priorities, we can always tweak as we go. Looking forward to getting the first pieces in place and sharing progress with you.
+User Avatar
+The initial deposit was set up automatically by freelancer for 10% of the 40 hours per week.
+So it's just the default. Of course the week 1 demo will be more. Do you think you can get it done with 40 hours?
+I am happy to create a second, larger milestone now if that provides more trust and confidence. That's just $48 based on 4 hours (10% of 40 hours).
+Great. The pipeline and funnel is ready.
+Screenshot 2026-02-01 at 12.51.36 AM.png
+Screenshot 2026-02-01 at 12.51.36 AM.png
+Screenshot 2026-02-01 at 12.52.12 AM.png
+Screenshot 2026-02-01 at 12.52.12 AM.png
+You just need to create a form for it and I need to add a calendar.
+Thanks, Jared, for clarifying - that makes sense, and I really appreciate the offer of a larger milestone; that does help with confidence on both sides.
+I’d like to use today to do the initial setup and map out the demo (Steps A–D) so I can give you a clear hours estimate and a concrete plan. Tomorrow I’ll share: (1) how many hours I expect Week 1 to take, (2) how we’ll move forward, and (3) anything I’ll need from you to stay on track. That way, we’re both aligned before we go full speed.
+User Avatar
+Here's the calendar you can use. There's a page in the funnel where you can embed it.
+New Messages
+
+Screenshot 2026-02-01 at 12.56.30 AM.png
+Screenshot 2026-02-01 at 12.56.30 AM.png
+Sounds good!
+
+
+Let me analyze what you have shared with me, getting back soon
+Milestone created by @jaredkf
+Initial deposit
+ — $48.00 CAD
+Milestone created by @jaredkf
+Milestone 1
+ — $192.00 CAD
+New Messages
+
+User Avatar
+I've increased the initial deposits to $240.
+
+
+I've sent you an invite to a new dummy Clio account I set up. It's empty, that also means we can do what we want with it.
+
+If we have approval to move forward after the week 1 demo, then we will move over to the production account and shut this down.
+
+I'll send you screenshots from the production account of custom fields and practice areas to set up. I can set them up myself, but I think (even though you already have experience with Clio), if you configure the create the custom field sets and practice areas, etc. you'll be completely informed on these things when you create the Make automations.
+
+
+You can add all these fields, practice areas, etc except for the last screenshot (custom field sets), I'm just showing you everything the current production Clio account has. In the next set of screenshots, I'll show you the only actual custom field sets you need to create for the demo purposes.
+
+
+Screenshot 2026-02-01 at 1.12.05 AM.png
+Screenshot 2026-02-01 at 1.12.05 AM.png
+Screenshot 2026-02-01 at 1.12.15 AM.png
+Screenshot 2026-02-01 at 1.12.15 AM.png
+Screenshot 2026-02-01 at 1.12.37 AM.png
+Screenshot 2026-02-01 at 1.12.37 AM.png
+Screenshot 2026-02-01 at 1.13.19 AM.png
+Screenshot 2026-02-01 at 1.13.19 AM.png
+Screenshot 2026-02-01 at 1.12.25 AM.png
+Screenshot 2026-02-01 at 1.12.25 AM.png
+Here are the custom field sets. You can make them text (one-line) or text (multi-line) by default depending on what makes sense. After all, it's just a demo.
+Screenshot 2026-02-01 at 1.17.21 AM.png
+Screenshot 2026-02-01 at 1.17.21 AM.png
+Screenshot 2026-02-01 at 1.17.35 AM.png
+Screenshot 2026-02-01 at 1.17.35 AM.png
+Screenshot 2026-02-01 at 1.17.12 AM.png
+Screenshot 2026-02-01 at 1.17.12 AM.png
+Screenshot 2026-02-01 at 1.17.54 AM.png
+Screenshot 2026-02-01 at 1.17.54 AM.png
+Screenshot 2026-02-01 at 1.18.24 AM.png
+Screenshot 2026-02-01 at 1.18.24 AM.png
+In fact, you can ignore the C1 Civil update fields. The "A1 General intake fields" and "C2 Civil intake" are the important custom field sets.
+When we create the matter in Clio Manage, it should automatically add these custom field sets (via Make scenario).
+I would like us to build a simple demo of the retell agent. Basically it just books a calls for new leads from the funnel's contact form. If you have time to develop a Retell agent that can RELIABLY ask and collect the information for the "C2 civil intake" custom fields, that would be very impressive.
+If you can't a simple demo is fine.
+I'm leaving for the night. I think freelancer chat is fine for this week. I'll add you to our ClickUp chat after the week 1 demo.
+Tomorrow, I will:
+- Set up Clio OAuth 2.0 w/ Make.
+- Share access to Retell AI workspace, API key & phone number
+If I have time, I'll try to create the Sharepoint site, intake list & folders. If not, I'll share that on Monday.
+Let me know if you need anything else.
+
+
+Thanks, Amir. I've attached an updated screenshot of our setup checklist of things I need to do for you. As you can see, I've added an OAuth 2.0 Clio Manage connection in Make as well as added you to the Retell workspace and purchased a local phone number. I didn't create any Retell API keys, I think you should be able to with Developer role, but let me know if not and I can send that to you.
+
+Thanks, Jared for the update. I’ve noted the Clio OAuth in Make, Retell access, and the new phone number. I’ll create the API keys with the Developer role and will reach out if I need anything.
+I’ve already started building the Contact Us form in GHL and am working on it. I’ll keep you updated.
+
+I have created the Contact Us Form and implemented a workflow that triggers on form submit in GHL, and added a dummy test link in place of make.com link (will replace later) and tested the workflow as well
+Now, next I will move forward as per Demo implementation plan
+I will share the next update when I have.. Stay tuned
+
+Thanks, Amir.
+I have a flu so I won't be available for the next 24 hours, but hopefully you have enough to keep busy. I'm in the middle of setting up Sharepoint assets, so I'm aiming to get you access to that tomorrow or Wednesday.
+
+May you recover quickly and be blessed with renewed health and strength, Jared.
+Don't worry, I'm making progress with the work in the meantime.
+
+Thanks, Amir. I appreciate it.
+I've created a list as well as a few templates in the SharePoint site. Although you won't have direct access to the SharePoint account, here is the site URL to the list:
+https://lawkimball.sharepoint.com/sites/1600BedfordHwy-Develop/Lists/MVA%20Client%20List/AllItems.aspx
+The templates are in /Documents/TEMPLATES/Correspondence
+There are 3 template documents in that directory that we'll use for the demo.
+The templated output docs will be placed in /Documents/CLIENTS/"[Client LastName], [Client FirstName] - MVA"
+Where the folder "[Client LastName], [Client FirstName] - MVA" will be generated by the automations.
+Could you please provide a progress update and if you need anything else from me.
+
+[Jared]
+Hi Amir,
+
+I appreciate your communication. However, I've reviewed your work, and it appears that almost nothing has been accomplished yet. From what I can tell, there were probably a few minutes spent on Make, Retell, and GHL, but it's extremely bare and nowhere near where the demo should be—and it's almost been a week since I awarded you the project. Even this demo requires a sophisticated Retell agent prompt and multiple Retell functions to handle a few case scenarios, multiple GHL automations, and likely half a dozen or more Make.com scenarios, not to mention the Clio and SharePoint/OneDrive/Word workflows.
+
+I understand you had other commitments, but I thought it was clear that we needed someone to commit a significant amount of time to this project. It would be one thing if certain personal emergencies came up, but based on the lack of work done on any of the platforms we're integrating, I'm very concerned that we have very different expectations for this demo project and its complexity.
+
+Because we're now a week behind, I'm at the point where I have to consider alternative developers. If you'd like to continue, that's fine, and I'm happy to offer a second opportunity. I'm going to need to see a skeleton of the demo (without the SharePoint info) completed by February 9th so that I can provide you with detailed feedback for the first iteration, which will then continue daily until the demo becomes presentable. I'll need confirmation that you'd like to continue, since the Clio account trial is going to expire, and it costs $200/user/month to continue, or we would have to set up another dummy account—which I'd prefer to save for a committed developer if you're not up to this project.
+
+[Amir]
+Hi Jared,
+
+I sincerely apologize for the delay and for falling short of your expectations. I take full responsibility.
+
+I'm committed to this project and want to continue. I'll complete a skeleton of the demo (without the SharePoint info) by February 9th so you can review it and provide feedback. I'll then work through your feedback daily until the demo is ready to present.
+
+I appreciate the second chance and will show you I can deliver.
+
+Best,
+Amir

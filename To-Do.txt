@@ -1,0 +1,160 @@
+1.1 — Open GHL and confirm pipeline and funnel ✓ DONE
+
+Followed this: In your browser, go to https://app.gohighlevel.com and log in.
+
+Already Given: In the left sidebar, find Locations (or the sub-account selector). Select the location Jared gave you (e.g. the one in the link: .../location/C4Zs4L5cOXo5ktQzLHtw/dashboard).
+
+Verified this: Pipeline: In the left menu, click Opportunities (or Sales → Opportunities / Pipeline). You should see the MAIN Pipeline with stages: New Leads, Attempting Contact, Intake Call Booked, Check w/ Lawyer, Consult Scheduled, Pending En…
+Reference screenshot: GHL_Demo_Setup/GHL_MAIN_Pipeline.png — match these stage names. If "Consult Scheduled" is missing, add it (use the pipeline settings / "+ Add stage").
+
+Verified this: Funnel: In the top navigation, click Funnels. Open the funnel named "Kimball Law (PI) Funnel".
+Reference screenshot: GHL_Demo_Setup/GHL_Kimball_Law_Funnel.png — you should see Funnel Steps: Landing Page, Calendar Page, Thank You Page.
+
+Did this: Calendar: In the left menu, go to Calendars (or Settings → Calendars). Find the calendar type "Intake Call" (1 hr, Round Robin).
+Reference screenshot: GHL_Demo_Setup/GHL_Intake_Call_Calendar.png — if it shows Inactive, click the row, then use Edit (pencil) or Settings (wrench) and set status to Active (or ask Jared to activate it). Note the calendar ID if you need it later (e.g. for Make.com booking).
+Calender(Intake Call) ID: EFNs7LgwFqgcGt5K74Cm
+
+
+1.2 Create the Contact Us form
+
+Form URL: https://app.gohighlevel.com/v2/location/C4Zs4L5cOXo5ktQzLHtw/form-builder-v2/3PVZq4OkM3ckpIRs1KPU
+Form ID (from URL): 3PVZq4OkM3ckpIRs1KPU
+
+--- Form fields (ONLY these — lead fills these) ---
+✓ First Name (Single line, required)
+✓ Last Name (Single line, required)
+✓ Email (Email, required)
+✓ Phone (Phone, required)
+✓ Legal Issue Type (Dropdown, required) — options: Personal Injury / MVA, Civil Litigation, Family, Other
+✓ Preferred Date/Time (Single line or Date/Time, optional)
+✓ Any Additional Notes (Multi-line, optional)
+✓ Consent checkbox (TnC) — configure [BUSINESS NAME] = Kimball Law, [USE_CASE] = consultation and case updates
+
+--- C2 fields: DO NOT add to form ---
+C2 fields (Date of incident, Location, Seatbelted, Brief description, Injuries) are collected by RETELL during the call.
+Add them ONLY in GHL Custom Fields (step 1.3). Make.com will populate them when Retell sends data.
+
+1.3 — Create custom fields in GHL (for Retell + Make updates)
+
+Done (Created these Contact Custom Fields in GHL → Settings → Custom Fields, group = Additional Info):
+✓ Call Notes (Multi Line)
+✓ Appointment Date (Date or Single Line)
+✓ Appointment Time (Single Line)
+✓ Date of incident or accident (Date or Single Line)
+✓ Time of incident or accident (Single Line)
+✓ Location of incident or accident (Single Line)
+✓ Seatbelted (Radio Button)
+✓ Brief description of incident (Multi Line)
+✓ Injuries reported at intake (Multi Line)
+
+--- 1.2 Form: DONE ---
+✓ Form created with correct fields (First Name, Last Name, Email, Phone, Legal Issue Type, Preferred Date/Time, Any Additional Notes)
+✓ C2 fields NOT on form (as intended — Retell collects these)
+✓ Form ID: 3PVZq4OkM3ckpIRs1KPU
+✓ Form connected to Kimball Law funnel Landing Page
+✓ Consent checkbox configured (verify [BUSINESS NAME] = Kimball Law if needed)
+
+--- 1.4 Workflow: DONE (tested with webhook.site) ---
+✓ Trigger: Form Submitted
+✓ Action 1: Add Contact to Pipeline (MAIN Pipeline → New Leads)
+✓ Action 2: Send Webhook (POST, JSON)
+✓ Verified: Lead "Amir Shahzad" created in GHL New Leads (2026-02-02)
+✓ Verified: Webhook received at webhook.site with full payload
+⚠ Next: Replace webhook.site URL with Make.com Scenario 1 webhook URL when Phase 3 is set up
+
+--- 1.5: DONE ---
+✓ Intake Call calendar active (ID: EFNs7LgwFqgcGt5K74Cm)
+✓ Consult Scheduled stage exists in MAIN Pipeline
+
+--- Phase 1 COMPLETE (1.1–1.5) ---
+Make.com Webhook URL (Scenario 1): https://hook.us2.make.com/jyq1z56fb4siowaoe07hq4shhs92wvbg
+
+--- Phase 3 (Make.com Scenario 1) — CONFIGURED ---
+✓ GHL workflow → Make.com webhook connected
+✓ Make.com Scenario 1: 2 modules only (Webhook + Retell AI Create a Phone Call)
+✓ Retell Create a Phone Call: From +19025001641, To 1.phone, Agent ID, Metadata ghl_contact_id=1.contact_id
+✓ Dynamic Variables: first_name, last_name, email, etc. (Map ON)
+Retell Agent ID: agent_8e30e42c9b66e1de8071abd262
+Retell From Number (E.164): +19025001641
+Make.com Webhook URL (Scenario 2): https://hook.us2.make.com/six78drnl3cf3x06wehb5os6vf0vs7j5
+
+NEXT: Paste Scenario 2 URL in Retell Webhook Settings → Agent Level Webhook URL
+NEXT: Test (form submit → Retell calls lead)
+
+--- Phase 2 (Clio dummy) — Do in parallel or after Phase 3 ---
+
+--- GHL FIXED IDs (from export) ---
+Pipeline ID: SRR9x1LWIDqgZsSemXSG
+Pipeline Stage ID (New Leads): 386ce585-35f5-49db-b8d5-9229e1266712
+Pipeline Stage ID (Consult Scheduled): b877fbbe-255c-4e68-9f0a-ddc3e951db19
+
+Contact ID (Saad Abdullah): LgOc0SyULhQg4AYKnxwk
+Contact ID (Amir Shahzad): (same contact_id field - different contacts have different IDs)
+
+Opportunity ID (Saad Abdullah): sDsq7WIY2RNQJg85Wnp9
+Opportunity ID (Amir Shahzad): 6iyj3KizK7lsc0OTibK4
+NOTE: Opportunity ID is DIFFERENT per lead - must be VARIABLE from webhook
+
+--- OPPORTUNITY ID AS VARIABLE — Process ---
+1. GHL Workflow 1 (Form Submitted): Add opportunity_id to webhook body
+   - Body: add "opportunity_id": "{{opportunity.id}}"
+   - Action order: Add to Pipeline first, THEN Send Webhook (so opportunity exists)
+
+2. Make.com Scenario 1 (Retell Create Phone Call): Add metadata field
+   - Metadata: Key ghl_opportunity_id, Value = {{1.opportunity_id}} (from webhook)
+
+3. Retell: Will pass metadata.ghl_opportunity_id in call_ended webhook
+
+4. Make.com Scenario 2 (Update Opportunity): Map Opportunity ID
+   - Opportunity ID: {{1.call.metadata.ghl_opportunity_id}}
+   - Pipeline ID: SRR9x1LWIDqgZsSemXSG (fixed)
+   - Stage ID: b877fbbe-255c-4e68-9f0a-ddc3e951db19 (Consult Scheduled)
+
+--- CHANGES NEEDED ---
+☐ GHL Workflow 1: Webhook body add opportunity_id
+☐ Make.com Scenario 1: Retell metadata add ghl_opportunity_id
+☐ Make.com Scenario 2 Mod 3: Pipeline ID, Stage ID, Opportunity ID (fixed + variable)
+
+https://app.gohighlevel.com/v2/location/C4Zs4L5cOXo5ktQzLHtw/contacts/detail/LgOc0SyULhQg4AYKnxwk
+
+https://hook.us2.make.com/six78drnl3cf3x06wehb5os6vf0vs7j5
+
+
+
+
+
+{
+  "event": "call_ended",
+  "call": {
+    "call_id": "test_call_abc123",
+    "metadata": {
+      "ghl_contact_id": "LgOc0SyULhQg4AYKnxwk",
+      "ghl_opportunity_id": "sDsq7WIY2RNQJg85Wnp9"
+    },
+    "retell_llm_dynamic_variables": {
+      "first_name": "Saad",
+      "last_name": "Abdullah",
+      "email": "verxeonteam@gmail.com",
+      "phone_number": "+923185914596",
+      "legal_issue_type": "Personal Injury / MVA",
+      "preferred_datetime": "2026-02-10",
+      "any_additional_notes": "I had an accident"
+    },
+    "transcript": "Agent: Hello Saad. User: Hi. Agent: Book consultation? User: Yes Monday 10am.",
+    "call_analysis": {
+      "call_summary": "Lead agreed to book Monday 10am.",
+      "custom_analysis_data": {
+        "followup_date": "2026-02-17",
+        "call_notes": "Agent: Hello Saad. User: Hi. Agent: Book consultation? User: Yes Monday 10am.",
+        "appointment_date": "2026-02-10",
+        "appointment_time": "10:00 AM",
+        "date_of_incident_or_accident": "2026-01-15",
+        "time_of_incident_or_accident": "2:30 PM",
+        "location_of_incident_or_accident": "Highway 101",
+        "seatbelted": "Yes",
+        "brief_description_of_incident": "Car accident on highway",
+        "injuries_reported_at_intake": "Neck pain, whiplash"
+      }
+    }
+  }
+}
