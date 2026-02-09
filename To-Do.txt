@@ -162,9 +162,53 @@ https://app.gohighlevel.com/v2/location/C4Zs4L5cOXo5ktQzLHtw/contacts/detail/LgO
 https://hook.us2.make.com/six78drnl3cf3x06wehb5os6vf0vs7j5
 
 
+--- LATEST WORK & NEXT STEPS (2026-02-09) ---
+
+What we tested after last update
+- Tried multiple GHL calendar APIs from Make.com and Postman:
+  - GET /calendars/services/bookings
+  - GET /calendars/events with locationId + calendarId + startTime + endTime
+  - GET /contacts/{contactId}/appointments (blocked by scope: 401 token not authorized)
+- Confirmed bookings are visible in GHL UI for:
+  - Location ID: C4Zs4L5cOXo5ktQzLHtw
+  - Calendar ID (Intake Call): EFNs7LgwFqgcGt5K74Cm
+  - Example contact ID: LgOc0SyULhQg4AYKnxwk
+- Verified current token works for creating appointments via:
+  - POST https://services.leadconnectorhq.com/calendars/events/appointments
+  - Body includes: locationId, calendarId, contactId, startTime, endTime, title, timezone
+
+Planned change: Retell → GHL direct (no Make.com in the middle for calendar)
+- Add two Retell custom functions that call GHL directly:
+  - Function 1: check_calendar_availability
+    - Method: GET
+    - URL: https://services.leadconnectorhq.com/calendars/events
+    - Headers: Authorization: Bearer <GHL token>, Version: 2021-07-28, Content-Type: application/json
+    - Query params: locationId=C4Zs4L5cOXo5ktQzLHtw, calendarId=EFNs7LgwFqgcGt5K74Cm, startTime, endTime
+    - Args: startTime, endTime (ISO UTC)
+  - Function 2: book_intake_call
+    - Method: POST
+    - URL: https://services.leadconnectorhq.com/calendars/events/appointments
+    - Headers: same as above
+    - Body args: locationId, calendarId, contactId, startTime, endTime, title="Intake Call", timezone="America/Halifax"
+
+Credentials / IDs to reuse in Retell + GHL
+- Location ID (Kimball Law – 1600): C4Zs4L5cOXo5ktQzLHtw
+- Calendar ID (Intake Call): EFNs7LgwFqgcGt5K74Cm
+- Example Contact ID for testing: LgOc0SyULhQg4AYKnxwk
+- GHL Private Integration Token (calendar): pit-70bb7fcb-49fa-466e-ae87-e00c9ddc33da
+
+Open TODOs for Retell ↔ GHL direct
+- [ ] Get a Location-level OAuth 2.0 connection in GHL with calendars/events.readonly + calendars/events.write confirmed (for future use and debugging).
+- [ ] Implement and test Retell custom function: check_calendar_availability → ensure GHL returns events or empty array correctly.
+- [ ] Implement and test Retell custom function: book_intake_call → confirm appointment appears in GHL Intake Call calendar.
+- [ ] Update Retell agent prompt to always:
+      1) Call check_calendar_availability before booking.
+      2) Call book_intake_call only when slot is free.
 
 
 
+
+---------
 {
   "event": "call_ended",
   "call": {
