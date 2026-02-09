@@ -87,6 +87,7 @@ NEXT: Test (form submit → Retell calls lead)
 Pipeline ID: SRR9x1LWIDqgZsSemXSG
 Pipeline Stage ID (New Leads): 386ce585-35f5-49db-b8d5-9229e1266712
 Pipeline Stage ID (Consult Scheduled): b877fbbe-255c-4e68-9f0a-ddc3e951db19
+Pipeline Stage ID (Intake Call Booked): a8ce872d-81df-471e-bb0c-b3ec5ddcc578
 
 Contact ID (Saad Abdullah): LgOc0SyULhQg4AYKnxwk
 Contact ID (Amir Shahzad): (same contact_id field - different contacts have different IDs)
@@ -112,8 +113,49 @@ NOTE: Opportunity ID is DIFFERENT per lead - must be VARIABLE from webhook
 
 --- CHANGES NEEDED ---
 ☐ GHL Workflow 1: Webhook body add opportunity_id
-☐ Make.com Scenario 1: Retell metadata add ghl_opportunity_id
+✓ Make.com Scenario 1: Retell metadata add opportunity_id (done — use 1.call.metadata.opportunity_id in Scenario 2)
 ☐ Make.com Scenario 2 Mod 3: Pipeline ID, Stage ID, Opportunity ID (fixed + variable)
+
+--- JARED FEEDBACK (2026-02-08) — STAGE FLOW CHANGE ---
+• Retell call ends successfully → Move to "Intake Call Booked" (NOT Consult Scheduled)
+• Consult Scheduled → Triggers Clio Person + Matter (staff manually moves for demo)
+• Scenario 2 Mod 3: Change Stage ID to Intake Call Booked: (get ID from GHL export)
+• Scenario 3 still triggers when opportunity = Consult Scheduled (manual move for demo)
+
+--- GHL WORKFLOW CHANGE (2026-02-09) ---
+✓ Removed second GHL workflow — Scenario 2 now triggers Scenario 3 directly via HTTP (no need for separate GHL workflow on Consult Scheduled)
+
+--- JARED FEEDBACK — RETELL REQUIREMENTS ---
+1. Check calendar availability (function/webhook to Make)
+2. Book intake call in GHL Intake Calendar (function/webhook)
+3. After booked → Move contact to "Intake Call Booked" (Make or GHL)
+4. Collect C2 custom field data during call (questions) → output to call_analysis
+5. Retell extracts data → GHL custom fields → then Clio Matter when created
+
+--- JARED FEEDBACK — PHONE NUMBER OPTIONS ---
+• Option A: Jared provides US/CA number + subscription
+• Option B: You buy (e.g. Twilio)
+→ RECOMMEND: Ask Jared for Option A (no cost, firm's number for demo)
+
+--- PHASE STATUS (as of 2026-02-09) ---
+✓ Phase 1: GHL (Form, Workflow, Custom Fields, Pipeline)
+✓ Phase 2: Clio (Practice areas, A1, C2 custom field sets)
+✓ Phase 3: Make.com Scenario 1 (GHL → Retell Call)
+✓ Phase 3: Make.com Scenario 2 (Retell → GHL Update) — triggers Scenario 3 via HTTP
+✓ Phase 5: Make.com Scenario 3 (Clio Person + Matter + SharePoint + HTTP → Scenario 4)
+✓ Phase 6: Scenario 4 (Folder + Download + Upload Client Initial Letter) — tested: POST to Scen 2 → Scen 3 → Scen 4 all ran successfully
+⚠ Phase 4: Retell — BLOCKED: phone number for US/CA outbound. Once resolved: calendar check, book call, C2 collection
+
+--- DEMO STATUS ---
+✓ Contact Us form → Scenario 1 → Retell (blocked) or manual POST to Scenario 2 → GHL update → Scenario 3 → Clio + SharePoint → Scenario 4 → Folder + doc
+✓ Second GHL workflow removed — Scenario 2 triggers Scenario 3 directly (no separate Consult Scheduled workflow)
+
+--- WHAT YOU NEED FROM JARED ---
+1. Phone: US/CA number for Retell testing (or confirm you buy)
+2. SharePoint: ✓ Access confirmed (KL Developers connection in Make.com)
+
+GHL Token: pit-70bb7fcb-49fa-466e-ae87-e00c9ddc33da
+Calender read write
 
 https://app.gohighlevel.com/v2/location/C4Zs4L5cOXo5ktQzLHtw/contacts/detail/LgOc0SyULhQg4AYKnxwk
 

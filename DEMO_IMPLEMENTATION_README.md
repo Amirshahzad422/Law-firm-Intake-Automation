@@ -11,11 +11,13 @@
 | Component | Status | Next |
 |-----------|--------|------|
 | Phase 1 (GHL) | ✅ Done | — |
-| Make.com Scenario 1 | ✅ Webhook + Retell Create a Phone Call (2 modules) | Test call |
-| Retell agent | 🔄 Created, configured in Make.com | **Proper Retell config** (Phase 4 below) |
-| Make.com Scenario 2 | ❌ Not started | Retell call ended → Update GHL |
-| GHL Workflow 2 | ❌ Not started | Consult Scheduled → Webhook |
-| Make.com Scenario 3 | ❌ Not started | Consult Scheduled → Clio Person + Matter |
+| Make.com Scenario 1 | ✅ Webhook + Retell Create a Phone Call (2 modules) | Test call (needs US/CA phone) |
+| Retell agent | 🔄 Created, configured in Make.com | **Retell enhancements** (Phase 4 below) |
+| Make.com Scenario 2 | ✅ Retell call ended → Update GHL (tested via Postman) | Change stage to **Intake Call Booked** |
+| Make.com Scenario 3 | ✅ Clio Person + Matter (A1, C2 mapped) | Add SharePoint list item (need access) |
+| Phase 4 (Retell) | ⚠️ Needs: calendar check, book call, C2 collection | Multiple custom functions/webhooks |
+| Phase 5 (SharePoint) | ❌ Need access | Create list item in MVA Client List |
+| Phase 6 (Scenario 4) | ❌ Not started | Intake Tracker → Folder + Word docs |
 
 ---
 
@@ -46,9 +48,11 @@
 ## Overview: What We're Building (Demo Only)
 
 1. **Step A:** Contact Us form in GHL → lead submits → contact created in GHL.  
-2. **Step B:** GHL workflow fires → sends data to Make.com → Retell AI calls lead → books Intake Call on GHL calendar → updates GHL contact and moves to "Consult Scheduled."  
-3. **Step C:** When opportunity = "Consult Scheduled" → Make.com creates Person + Pending Matter in Clio (with A1 + C2 custom field sets) and adds a row to SharePoint "Intake Tracker."  
-4. **Step D:** When new item in Intake Tracker → Make.com creates client folder in OneDrive/SharePoint and fills Word templates (Retainer, Initial Memo) with lead data.
+2. **Step B:** GHL workflow fires → sends data to Make.com → Retell AI calls lead → checks calendar → books Intake Call on GHL calendar → updates GHL contact and moves to **"Intake Call Booked"** (not Consult Scheduled).  
+3. **Step C:** When opportunity = **"Consult Scheduled"** (staff manually moves for demo) → Make.com creates Person + Pending Matter in Clio (with A1 + C2 custom field sets) and adds a row to SharePoint MVA Client List.  
+4. **Step D:** When new item in MVA Client List → Make.com creates client folder in OneDrive/SharePoint and fills Word templates (Retainer, Initial Memo) with lead data.
+
+**Jared feedback (2026-02-08):** Retell call success → move to **Intake Call Booked**. Consult Scheduled triggers Clio + SharePoint; staff manually moves for demo.
 
 **Reference:** Open **GHL_Demo_Setup/Demo_Workflow_Outline.png** to see this flow visually.
 
@@ -61,7 +65,7 @@ These are **two separate Make.com scenarios**. Retell sits in the middle.
 | Scenario | Trigger | What it does | Retell's role |
 |----------|---------|--------------|---------------|
 | **Scenario 1** | GHL form submitted | Receives GHL data → tells Retell to call the lead | Retell **receives** the call request from Make.com (via Retell API) |
-| **Scenario 2** | Retell call ended | Receives Retell data → updates GHL contact + moves to Consult Scheduled | Retell **sends** the call-ended payload to Make.com (via Retell webhook URL) |
+| **Scenario 2** | Retell call ended | Receives Retell data → updates GHL contact + moves to **Intake Call Booked** | Retell **sends** the call-ended payload to Make.com (via Retell webhook URL) |
 
 ### Scenario 1 — GHL Form → Retell Create a Phone Call
 
@@ -354,16 +358,18 @@ Scenario 1 only initiates the call. When the call ends, **Retell** sends data to
 
 ---
 
-### Stage 3.4.4 — Add GoHighLevel: Move to Consult Scheduled
+### Stage 3.4.4 — Add GoHighLevel: Move to Intake Call Booked
 
 | Step | Action | What you'll see |
 |------|--------|-----------------|
 | 1 | Click **+** after the Update contact module | Module picker |
 | 2 | Search **GoHighLevel** → select **Update opportunity** or **Add to pipeline** / **Move opportunity** → **Add** | GHL module |
 | 3 | **Pipeline:** MAIN | — |
-| 4 | **Stage:** Consult Scheduled | — |
+| 4 | **Stage:** **Intake Call Booked** (NOT Consult Scheduled — get stage ID from GHL export) | — |
 | 5 | **Contact:** Same contact (from `1.call_analysis.custom_data.ghl_contact_id` or metadata path) | Turn **Map ON** |
 | 6 | Save | — |
+
+**Note:** Consult Scheduled is for staff manual move (triggers Scenario 3). See To-Do.txt for Intake Call Booked stage ID.
 
 ---
 
@@ -457,12 +463,24 @@ Some Clio setups let you add fields when creating a set; others require creating
 
 Jared expects a **proper configuration** in Retell. Follow the **Retell Configuration — Step-by-Step Guide** at the end of this doc.
 
-## 4.1 — Open your agent
+## 4.1 — Retell requirements (Jared feedback)
+
+| # | Requirement | How |
+|---|-------------|-----|
+| 1 | Check calendar availability | Retell custom function → webhook to Make.com scenario |
+| 2 | Book intake call in GHL Intake Calendar | Retell custom function → webhook to Make.com scenario |
+| 3 | After booked → Move to Intake Call Booked | Scenario 2 (Retell call ended) or GHL workflow |
+| 4 | Collect C2 custom field data during call | Retell prompt (ask questions) → output to `call_analysis` |
+| 5 | Extract data → GHL custom fields → Clio Matter | Scenario 2 maps `call_analysis.custom_analysis_data` → GHL; Scenario 3 maps GHL → Clio |
+
+**Phone number for testing:** Retell does not support Pakistan outbound. Options: (A) Jared provides US/CA number + subscription; (B) You buy (e.g. Twilio). **Recommend:** Ask Jared for Option A.
+
+## 4.2 — Open your agent
 
 1. Retell → **Agents** (left sidebar).  
 2. Open your **Law Firm Intake** agent.  
 3. **Prompt:** Write a short system prompt: e.g. you’re an intake coordinator for a law firm; the lead just submitted a form; greet them, confirm name/phone, ask if they want to book a free consultation; if yes, ask for preferred date/time; say you’re booking it and summarize. Optionally: if they mention a car accident, ask the C2 questions (date of incident, time, location, seatbelted, brief description, injuries) and say you’ll note them.  
-4. **Tools / Webhook:** Add a **Webhook** for “Call ended” — set the URL to your **Make.com Scenario 1** second webhook (the one that receives Retell’s “call ended” payload). So when the call ends, Retell POSTs transcript and data to Make.com.  
+4. **Tools / Webhook:** Add a **Webhook** for “Call ended” — set the URL to your **Make.com Scenario 2** webhook (the one that receives Retell’s “call ended” payload). So when the call ends, Retell POSTs transcript and data to Make.com.  
 5. **Test:** Use Retell’s **Test call** to your phone; refine the prompt.  
 6. Copy the **Agent ID** into Make.com Scenario 1 (HTTP request to Retell) in **Phase 3.4**.
 
@@ -482,22 +500,222 @@ Jared expects a **proper configuration** in Retell. Follow the **Retell Configur
    - From **C2:** Date of incident or accident, Time, Location, Seatbelted, Brief description, Injuries reported (from GHL custom fields or Retell payload).  
    - **Reference:** **Clio/Clio_Field_Set_A1_General_Intake.png** and **Clio/Clio_Field_Set_C2_Civil_Intake.png** for exact field names.  
 5. Store **Matter ID**.  
-6. **SharePoint:** **Microsoft 365** (or **HTTP** Microsoft Graph) → **Create list item** in the **Intake Tracker** list. Columns: e.g. Client Name, Matter ID, Date, Status (Jared will confirm list name and columns when he creates it).
+6. **SharePoint:** **Microsoft 365** (or **HTTP** Microsoft Graph) → **Create list item** in the **MVA Client List**. Site: `https://lawkimball.sharepoint.com/sites/1600BedfordHwy-Develop`. Output path: `/Documents/CLIENTS/"[LastName], [FirstName] - MVA"`. **Requires:** SharePoint access or M365 connection in Make.com (ask Jared).
 
-**Phase 5 done when:** Moving a contact to Consult Scheduled in GHL triggers Scenario 3 and creates Person + Pending Matter in Clio (with A1 and C2 sets) and one row in Intake Tracker.
+**Phase 5 done when:** Moving a contact to Consult Scheduled triggers Scenario 3 and creates Person + Pending Matter in Clio (with A1 and C2 sets) and one row in MVA Client List.
 
 ---
 
-# PHASE 6: Make.com — Scenario 4 (Intake Tracker → Folder + Docs)
+# PHASE 6: Make.com — Scenario 4 (Folder + Word Docs) — Step-by-Step
 
-**When:** When SharePoint **Intake Tracker** list and **Microsoft 365** connection (OneDrive/SharePoint) are ready.
+**Trigger:** Scenario 3 sends HTTP POST to Scenario 4 webhook (same pattern as Scenario 2 → Scenario 3).  
+**Goal:** Create client folder in SharePoint and fill Retainer + Initial Memo with lead data.
 
-1. **Create a new scenario** — name e.g. **"Demo 3 – Intake Tracker → Folder + Docs"**.  
-2. **Trigger:** **Microsoft 365** → **Watch list items** (or **Watch rows**) on the **Intake Tracker** list (Jared will give site/list IDs or you’ll select in the module).  
-3. **Create folder:** **Microsoft 365** / **OneDrive** → **Create folder**. Path e.g. `/Clients/{{ClientName}}/` (use client name from the trigger row).  
-4. **Documents:** Use **Microsoft 365** to create/copy files. For **Retainer** and **Initial Memo**, either: (a) use Word templates with placeholders and a merge step (Power Automate or Make.com), or (b) simple text/HTML templates in Make.com with **Replace** and then upload as .docx or PDF. Map lead data (name, date, matter ID, etc.) into the template. Save files into the folder created in step 3.
+---
 
-**Phase 6 done when:** New row in Intake Tracker triggers Scenario 4 and creates a client folder and filled Retainer + Initial Memo in that folder.
+## 6.0 — Add HTTP module to Scenario 3 (do this first)
+
+So that Scenario 4 runs when Scenario 3 finishes:
+
+| Step | Action | Details |
+|------|--------|---------|
+| 1 | Open Scenario 3 | Make.com → Scenarios → your Scenario 3 |
+| 2 | Create Scenario 4 | New scenario → name it "Demo 4 – Folder + Docs" |
+| 3 | Add webhook trigger | Scenario 4 → Add module → Webhooks → Custom webhook → Add |
+| 4 | Copy webhook URL | Copy the URL from Scenario 4's webhook module |
+| 5 | In Scenario 3 | Add module **after** SharePoint Create Item |
+| 6 | Add HTTP module | HTTP → Make a request → Add |
+| 7 | **URL** | Paste Scenario 4's webhook URL |
+| 8 | **Method** | POST |
+| 9 | **Headers** | Add: `Content-Type` = `application/json` |
+| 10 | **Body type** | Raw |
+| 11 | **Request content** | Use JSON below (see 6.0.1 below). Use Map to pick variables from modules 2, 4, 5 |
+| 12 | Save | Save Scenario 3 |
+
+**6.0.1 — HTTP body JSON:**
+
+```json
+{
+  "first_name": "{{2.first_name}}",
+  "last_name": "{{2.last_name}}",
+  "email": "{{2.email}}",
+  "phone": "{{2.phone}}",
+  "legal_issue_type": "{{2.legal_issue_type}}",
+  "appointment_date": "{{2.appointment_date}}",
+  "appointment_time": "{{2.appointment_time}}",
+  "date_of_incident_or_accident": "{{2.date_of_incident_or_accident}}",
+  "time_of_incident_or_accident": "{{2.time_of_incident_or_accident}}",
+  "location_of_incident_or_accident": "{{2.location_of_incident_or_accident}}",
+  "seatbelted": "{{2.seatbelted}}",
+  "brief_description_of_incident": "{{2.brief_description_of_incident}}",
+  "injuries_reported_at_intake": "{{2.injuries_reported_at_intake}}",
+  "call_notes": "{{2.call_notes}}",
+  "matter_display_number": "{{5.Display Number}}",
+  "matter_id": "{{5.Matter ID}}",
+  "client_id": "{{4.Contact ID}}"
+}
+```
+
+If a variable is missing in your webhook, use `ifempty()` or leave it out.
+
+---
+
+## 6.1 — Create Scenario 4 and set trigger
+
+| Step | Action | What you see |
+|------|--------|--------------|
+| 1 | Make.com → **Scenarios** | Left menu |
+| 2 | **Create a new scenario** | Blue button |
+| 3 | Click scenario name (top) | Rename to **"Demo 4 – Folder + Docs"** |
+| 4 | Click the **+** in the center | Module picker opens |
+| 5 | Search **Webhooks** | Type "Webhooks" in search |
+| 6 | Click **Webhooks** | Service list |
+| 7 | Click **Custom webhook** | Action |
+| 8 | Click **Add** | Webhook module appears |
+| 9 | **Copy the webhook URL** | Copy icon or click URL |
+| 10 | **Paste this URL** in Scenario 3's HTTP module (see 6.0 above) | — |
+| 11 | Click **OK** | Save webhook |
+
+**Scenario 4 trigger:** Custom webhook. Data comes from Scenario 3 HTTP body.
+
+---
+
+## 6.2 — Create folder in SharePoint
+
+| Step | Action | What you'll see |
+|------|--------|-----------------|
+| 1 | Scenario 4: Click **+** after webhook | Module picker |
+| 2 | Search **Microsoft SharePoint** | Or "SharePoint" |
+| 3 | Select **Microsoft SharePoint Online** | Service |
+| 4 | Select **Create a folder** or **Create folder** | Or search "Create folder" |
+| 5 | Click **Add** | —
+| 6 | **Connection** | Select "KL Developers - SharePoint" (same as Scenario 3) |
+| 7 | **Search Method** | Select from the list |
+| 8 | **Site ID** | Select **1600 Bedford Hwy - Develop** |
+| 9 | **Drive ID** or **Library** | If asked: Documents library. Or select from list |
+| 10 | **Folder path** or **Parent folder** | Map: `/Documents/CLIENTS/` (or the parent path) |
+| 11 | **Folder name** | Map: `{{1.last_name}}, {{1.first_name}} - MVA` |
+
+Module 1 = webhook. Use `1.last_name`, `1.first_name` from the HTTP body.
+
+**If "Create folder" is not available:** Use **Microsoft 365** → **OneDrive** → **Create folder** (or equivalent). Path: `/Documents/CLIENTS/{{1.last_name}}, {{1.first_name}} - MVA`.
+
+---
+
+## 6.3 — Download template + Upload to client folder (step-by-step)
+
+**Note:** Copy file is not available in Make.com SharePoint. Use **Download a file** + **Upload a file** for each template.
+
+Templates are in: `TEMPLATES/Correspondence`. Download each template, then upload it into the new client folder.
+
+### 6.3.1 — Fix "Failed to load data" on File field
+
+If the File dropdown shows "Failed to load data!", use **Enter manually** instead:
+
+| Step | Action | Details |
+|------|--------|---------|
+| 1 | **Enter (File ID & File Path)** | Choose **File Path** |
+| 2 | **Enter a File Path** | Change from "Select from the list" to **Enter manually** |
+| 3 | **File path** | Type: `TEMPLATES/Correspondence/Retainer.docx` (or the exact template name Jared gave – e.g. `Retainer Agreement.docx`) |
+| 4 | Save | Click OK |
+
+**If you don't know the exact file name:** Open SharePoint in browser → go to `Documents/TEMPLATES/Correspondence` → note the exact file names (e.g. `Retainer.docx`, `Initial Memo.docx`).
+
+---
+
+### 6.3.2 — Download file + Upload file (only option)
+
+Copy file is not available in Make.com SharePoint module. Use **Download a file** + **Upload a file**:
+
+| Step | Module | What to configure |
+|------|--------|-------------------|
+| 1 | **Download a file** | Microsoft SharePoint Online → **Download a file** |
+| 2 | Connection | KL Developers |
+| 3 | Site ID | `lawkimball.sharepoint.com,ea856c5c-a7ed-4b12-b4f1-43d613dd10e9,2804c9f2-cc92-4559-8a33-a96d1ca0f08c` (or select "1600 Bedford Hwy - Develop" from dropdown) |
+| 4 | Drive ID | Same as Site ID, or select "Documents (documentLibrary)" from dropdown |
+| 5 | File Path | Enter manually: `TEMPLATES/Correspondence/Retainer.docx` |
+| 6 | Convert to PDF | No |
+| 7 | **Upload a file** | Microsoft SharePoint Online → **Upload a file** |
+| 8 | Folder | Map the folder from Create folder (6.2). Use output e.g. `2.Id` if Create folder is module 2 |
+| 9 | File | Map the output of Download (Data or File field) |
+| 10 | File name | `Retainer - {{1.last_name}}, {{1.first_name}}.docx` |
+
+---
+
+### 6.3.3 — Retainer template (exact steps)
+
+| Step | Action |
+|------|--------|
+| 1 | Add **Download a file** module after Create folder |
+| 2 | Connection: KL Developers |
+| 3 | Enter (File ID & File Path): File Path |
+| 4 | Enter a File Path: Enter manually |
+| 5 | Site ID: `lawkimball.sharepoint.com,ea856c5c-a7ed-4b12-b4f1-43d613dd10e9,2804c9f2-cc92-4559-8a33-a96d1ca0f08c` |
+| 6 | Drive ID: Same or select Documents |
+| 7 | File Path: `TEMPLATES/Correspondence/Retainer.docx` |
+| 8 | Convert to PDF: No |
+| 9 | Add **Upload a file** module |
+| 10 | Folder: Map Create folder output (e.g. `2.Id`) |
+| 11 | File: Map Download output (Data) |
+| 12 | File name: `Retainer - {{1.last_name}}, {{1.first_name}}.docx` |
+
+---
+
+### 6.3.4 — Initial Memo template (same process)
+
+| Step | Action |
+|------|--------|
+| 1 | Add another **Download a file** module |
+| 2 | Same connection, Site ID, Drive ID |
+| 3 | File Path: `TEMPLATES/Correspondence/Initial Memo.docx` (match exact name) |
+| 4 | Convert to PDF: No |
+| 5 | Add **Upload a file** module |
+| 6 | Folder: Same as Retainer (Create folder output) |
+| 7 | File: Map this Download output |
+| 8 | File name: `Initial Memo - {{1.last_name}}, {{1.first_name}}.docx` |
+
+---
+
+### 6.3.6 — Checking template file names
+
+To get exact names:
+
+1. Open: https://lawkimball.sharepoint.com/sites/1600BedfordHwy-Develop  
+2. Go to Documents → TEMPLATES → Correspondence  
+3. Write down the exact Retainer and Initial Memo file names (e.g. `Retainer.docx`, `Initial Memo.docx`)
+
+---
+
+## 6.4 — (Merged into 6.3)
+
+Copy/upload of both templates is done in 6.3. No separate 6.4 step needed.
+
+---
+
+## 6.5 — Module order in Scenario 4
+
+1. **Webhook** (trigger) — receives data from Scenario 3 HTTP  
+2. **Create folder** — `/Documents/CLIENTS/[LastName], [FirstName] - MVA`  
+3. **Download a file** — Retainer template from TEMPLATES/Correspondence  
+4. **Upload a file** — Retainer to client folder  
+5. **Download a file** — Initial Memo template  
+6. **Upload a file** — Initial Memo to client folder  
+
+---
+
+## 6.6 — Quick reference
+
+| Item | Value |
+|------|-------|
+| SharePoint connection | KL Developers |
+| Site | 1600 Bedford Hwy - Develop |
+| Client folder path | `/Documents/CLIENTS/[LastName], [FirstName] - MVA` |
+| Templates path | `/Documents/TEMPLATES/Correspondence` |
+| Webhook variables | `1.first_name`, `1.last_name`, `1.email`, etc. |
+
+---
+
+**Phase 6 done when:** Scenario 3 HTTP triggers Scenario 4, folder is created, and Retainer + Initial Memo are saved in that folder.
 
 ---
 
@@ -505,9 +723,9 @@ Jared expects a **proper configuration** in Retell. Follow the **Retell Configur
 
 1. Submit the **Contact Us** form in GHL (use your own phone/email for testing).  
 2. Confirm: GHL workflow runs, Make.com Scenario 1 receives webhook.  
-3. If Retell is connected: Retell calls the number; after the call, GHL contact is updated and opportunity moves to **Consult Scheduled**.  
-4. Confirm: Make.com Scenario 2 runs (call ended → GHL update) and contact moves to Consult Scheduled.  
-5. Confirm: Make.com Scenario 3 runs, Clio has new Person + Pending Matter (with A1 and C2 filled), and Intake Tracker has a new row.  
+3. If Retell is connected: Retell calls the number; after the call, GHL contact is updated and opportunity moves to **Intake Call Booked**.
+4. Confirm: Make.com Scenario 2 runs (call ended → GHL update) and contact moves to Intake Call Booked. Staff manually moves to Consult Scheduled for demo.
+5. Confirm: Make.com Scenario 3 runs, Clio has new Person + Pending Matter (with A1 and C2 filled), and MVA Client List has a new row.
 6. Confirm: Make.com Scenario 4 runs, client folder is created and Retainer + Initial Memo are saved.
 
 ---
@@ -533,10 +751,11 @@ Jared expects a **proper configuration** in Retell. Follow the **Retell Configur
 
 | Item | Used in | Jared said |
 |------|---------|------------|
-| Retell API key + phone number + workspace | Scenario 1, Retell agent | Tomorrow |
+| Retell API key + phone number + workspace | Scenario 1, Retell agent | Done |
 | Clio OAuth in Make.com | Scenario 3 | He’ll set up tomorrow |
-| SharePoint Intake Tracker + M365 connection | Scenario 3 (list item), Scenario 4 (folder + docs) | Maybe tomorrow, else Monday |
-| Word templates (Retainer, Initial Memo) | Scenario 4 | When he shares |
+| **Phone for testing** (US/CA) | Retell outbound — PK not supported | Option A: Jared provides; Option B: You buy (Twilio). Recommend A. |
+| **SharePoint access** (guest or M365 in Make) | Scenario 3 (MVA Client List), Scenario 4 (folder + docs) | Site URL shared; direct access not provided. Ask Jared. |
+| Word templates (Retainer, Initial Memo) | Scenario 4 | In `/Documents/TEMPLATES/Correspondence` |
 
 You can complete **Phase 1 (GHL)** and **Phase 2 (Clio)** and Scenario 1 (webhook + Retell) in **Phase 3** now. Add Retell agent config (Phase 4) and Scenario 2 (call ended → GHL) when Retell is ready; add Scenarios 3 and 4 when Clio OAuth and SharePoint/M365 are ready.
 

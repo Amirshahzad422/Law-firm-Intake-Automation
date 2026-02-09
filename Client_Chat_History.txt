@@ -395,14 +395,73 @@ I understand you had other commitments, but I thought it was clear that we neede
 
 Because we're now a week behind, I'm at the point where I have to consider alternative developers. If you'd like to continue, that's fine, and I'm happy to offer a second opportunity. I'm going to need to see a skeleton of the demo (without the SharePoint info) completed by February 9th so that I can provide you with detailed feedback for the first iteration, which will then continue daily until the demo becomes presentable. I'll need confirmation that you'd like to continue, since the Clio account trial is going to expire, and it costs $200/user/month to continue, or we would have to set up another dummy account—which I'd prefer to save for a committed developer if you're not up to this project.
 
+
+[Amir]
+I’m sorry, Jared, that progress hasn’t met your expectations and that I’ve fallen behind. I understand your frustration, and I take full responsibility for the delay.
+I’m committed to this project and want to continue. I’ll put in the time and focus needed to bring the demo to where it should be.
+I’ll have a skeleton of the demo (without the SharePoint pieces) completed by February 9th so you can review it and give feedback. I’ll then work through your feedback daily until the demo is ready to present.
+I appreciate the second opportunity and will show you that I can deliver on this.
+Don't think of starting with another developer, as it will take up your time to discuss requirements again
+
+I've started today and will fill most of the gap today. Stay Tuned
+
+
+Today
+
+
+[Jared]
+
+Hi Jared,
+Progress update. I’ve been working on the demo today and here’s where things stand.
+Scenario 2 (Retell call ended → GHL update): Done and tested via Postman. Contact and opportunity update correctly, and the opportunity moves to Consult Scheduled.
+Retell: I tested the integration but hit a blocker: Retell doesn’t support my country’s phone number. To test live, I’d need to buy a US number (e.g. via Twilio). Do you have a preferred approach or a solution you’d like me to use?
+Scenario 3 (Clio Person + Matter): I’m testing the Clio Person and Matter creation, including A1 and C2 custom field sets. The flow is wired; I’m validating it end-to-end.
+SharePoint: I have the MVA Client List URL and folder structure. To finish the SharePoint step, I’ll need whatever access or setup is required from your side. Happy to work with whatever you can provide.
+Let me go to bed for a few hours, as I have been working on this continuously from morning, then I’ll pick up tomorrow and finish the remaining work.
+I also have an assistant developer on standby for future capacity.
+I’ll send the rest of the update tomorrow and will almost complete the Demo as only 2 out of 7 phases are left as per my implementation plan. Stay Tuned
+User Avatar
+Ok, got it. I can see that:
+
+- You've set up a second GHL workflow.
+
+- You've set up and began building out scenarios 1 & 2 in make. You have the webhook set up for scenario 3.
+
+- You've created the custom fields in Clio and their corresponding field sets.
+
+- You've developed the Retell agent a little more. This is a good start, but I will want it to collect the custom field data to complete the Clio custom field sets. Let me know any questions you have for that.
+
+- I tried to enabled PK outbound calling in Retell. However, in order to do it, it would require a different telephony set up. We have several options. I could provide you with a custom US/CA telephone number and subscription, or you can. I'll leave that decision to you.
+
+- Just to clarify, you may only have 2 out of the 7 phases left. However, each of the phases/steps will require a significant amount more complexity added to them. For example, the retell agent will need multiple custom functions/webhooks to its own Make scenarios, Retell will have to extract the info from call data and enter those into GHL custom fields so that eventually it can be added to a Clio matter when that matter is created.
+A few feedback refinement notes:
+
+- When the Retell call ends successfully, it will update the GHL opportunity to "intake call booked" stage. "Consult Scheduled" stage for now will still trigger the creation of new Clio Matter and Contact records. However, staff or I will move this manually (at least for the demo's purposes).
+
+- The Retell agent has to actually 1) check calendar availability and 2) book the intake call in the intake calendar. Once that occurs, then the contact can be moved to "Intake Call Booked" stage whether by a Make scenario or GHL workflow (your choice). 3) As mentioned before, the retell agent must ask numerous questions to also collect the data for custom fields you created in Clio.
+
+This is definitely a more promising restart of the project, but there's still more to do. Thanks for responding to this so positively. I appreciate you taking responsibility. Let's make this a successful working business relationship.
+New Messages
+
+Thank you Amir, let me know what additional support you need so that we are both successful in this project.
+
+
+Today
+
 [Amir]
 Hi Jared,
-
-I sincerely apologize for the delay and for falling short of your expectations. I take full responsibility.
-
-I'm committed to this project and want to continue. I'll complete a skeleton of the demo (without the SharePoint info) by February 9th so you can review it and provide feedback. I'll then work through your feedback daily until the demo is ready to present.
-
-I appreciate the second chance and will show you I can deliver.
-
-Best,
-Amir
+Here’s an update on today’s work:
+- Scenario 3 (Clio Person + Matter + SharePoint item + HTTP to Scenario 4)
+- Scenario 4 (folder creation + client letter in SharePoint) – tested end-to-end
+- Scenario 2 now triggers Scenario 3 directly (removed the second GHL workflow)
+- Scenario 5A: Calendar availability check – tested and working
+I don’t have direct access to your SharePoint, but all Make.com scenarios are built and wired to the KL Developers connection. Once access is confirmed, the flow should be ready.
+For live call testing in Retell, I’d request that you provide a US/CA number so we can validate the full flow. I’m ready to continue as soon as that’s available.
+Tomorrow, I will:
+- Add Retell custom functions (check availability + book call)
+- Build Scenario 5B (create booking)
+- Main remaining step: live call testing with Retell
+I’ve put in solid time today, and meaningful progress has been made. I’m on track to finish the remaining pieces by tomorrow.
+Updated the new Stage type as "intake call booked" upon retell call end
+Acknowledged the retell's functionality and worked on it
+Started working on the remaining work today
