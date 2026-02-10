@@ -155,6 +155,7 @@ NOTE: Opportunity ID is DIFFERENT per lead - must be VARIABLE from webhook
 2. SharePoint: ✓ Access confirmed (KL Developers connection in Make.com)
 
 GHL Token: pit-70bb7fcb-49fa-466e-ae87-e00c9ddc33da
+GHL Token (calendar): pit-d72adbed-0b1a-42be-a3ff-067e6b810201
 Calender read write
 
 https://app.gohighlevel.com/v2/location/C4Zs4L5cOXo5ktQzLHtw/contacts/detail/LgOc0SyULhQg4AYKnxwk
@@ -195,7 +196,7 @@ Credentials / IDs to reuse in Retell + GHL
 - Location ID (Kimball Law – 1600): C4Zs4L5cOXo5ktQzLHtw
 - Calendar ID (Intake Call): EFNs7LgwFqgcGt5K74Cm
 - Example Contact ID for testing: LgOc0SyULhQg4AYKnxwk
-- GHL Private Integration Token (calendar): pit-70bb7fcb-49fa-466e-ae87-e00c9ddc33da
+- GHL Private Integration Token (calendar): pit-d72adbed-0b1a-42be-a3ff-067e6b810201   #pit-70bb7fcb-49fa-466e-ae87-e00c9ddc33da
 
 Open TODOs for Retell ↔ GHL direct
 - [ ] Get a Location-level OAuth 2.0 connection in GHL with calendars/events.readonly + calendars/events.write confirmed (for future use and debugging).
